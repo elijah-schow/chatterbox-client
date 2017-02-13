@@ -1,9 +1,15 @@
 var app = {
   init: function() {
+    // Properties
     app.server = 'http://parse.atx.hackreactor.com/chatterbox/classes/messages';
     app.username = new URLSearchParams(window.location.search).get('username');
-    //Event handlers
+
+    // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
+
+    // Refresh loop
+    app.renderRoom();
+    setInterval(app.renderRoom, 1000);
   },
   send: function(data, success, error) {
     $.ajax({
@@ -35,12 +41,14 @@ var app = {
     $chat.find('.message').text(message['text']);
 
     $('#chats').append($chat);
-    $('#send .message-input').val('');
   },
   renderRoom: function() {
     app.fetch(function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
+      console.log('rendered room');
+    }, function(){
+      console.log('failed to render room');
     });
   },
   escape: function(string) {
@@ -57,6 +65,8 @@ var app = {
     };
 
     app.send(message, app.renderRoom);
+    // Clear the input box
+    $('#send .message-input').val('');
   }
 };
 
