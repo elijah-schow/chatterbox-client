@@ -26,6 +26,7 @@ var app = {
     $.ajax({
       'url': app.server,
       'type': 'GET',
+      'data': 'order=-createdAt',
       'contentType': 'application/json',
       'success': success,
       'error': error
@@ -46,9 +47,7 @@ var app = {
     app.fetch(function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
-      console.log('rendered room');
-    }, function(){
-      console.log('failed to render room');
+      console.log(data);
     });
   },
   escape: function(string) {
@@ -63,10 +62,11 @@ var app = {
       'text': $('#send .message-input').val(),
       'roomname': 'lobby'
     };
-
-    app.send(message, app.renderRoom);
-    // Clear the input box
-    $('#send .message-input').val('');
+    app.send(message, function(data) {
+      console.log(data);
+      app.renderRoom();
+    });
+    $('#send .message-input').val('');    // Clear the input box
   }
 };
 
