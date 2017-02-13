@@ -5,8 +5,21 @@
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
 
+  </head>
+  <body>
+    <div id="main">
+      <h1>chatterbox</h1>
+      <form>
+        <input type="text" name="message-input" placeholder="Your Message Here">
+        <input type="submit" value="send">
+      </form>
+    </div>
+    <div id="chats"></div>
+
+
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -18,15 +31,9 @@
         window.location.search = newSearch;
       }
     </script>
+    
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
-  </head>
-  <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-    </div>
-    <div id="chats"></div>
   </body>
 </html>
