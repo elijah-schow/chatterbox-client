@@ -9,9 +9,9 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
-      <form>
-        <input type="text" name="message-input" placeholder="Your Message Here">
-        <input type="submit" value="send">
+      <form id="send">
+        <input type="text" class="message-input" placeholder="Your Message Here">
+        <input type="submit" value="send" class="submit">
       </form>
     </div>
     <div id="chats"></div>
@@ -20,6 +20,11 @@
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    
+    <!-- your scripts -->
+    <script src="env/config.js"></script>
+    <script src="scripts/app.js"></script>
+    
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -27,13 +32,12 @@
         if (newSearch !== '' & newSearch !== '?') {
           newSearch += '&';
         }
+        
         newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
         window.location.search = newSearch;
       }
+
+      $(document).ready(app.init);
     </script>
-    
-    <!-- your scripts -->
-    <script src="env/config.js"></script>
-    <script src="scripts/app.js"></script>
   </body>
 </html>
