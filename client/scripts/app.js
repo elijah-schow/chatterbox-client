@@ -3,10 +3,12 @@ var app = {
     // Properties
     app.server = 'http://parse.atx.hackreactor.com/chatterbox/classes/messages';
     app.username = new URLSearchParams(window.location.search).get('username');
+    app.refreshRooms();
 
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
-    $('#room .room').on('change', app.handleRoomChange);
+    $('.room').on('change', app.renderRoom);
+    $('.refresh-rooms').on('click', app.refreshRooms);
 
     // Refresh loop
     app.renderRoom();
@@ -44,15 +46,17 @@ var app = {
 
     $('#chats').append($chat);
   },
-  renderRoom: function() {
-    app.fetch( 'order=-createdAt', function(data) {
+  renderRoom: function(room) {
+    room = room || app.currentRoom();
+    var query = `where={"roomname":{"$in":["${room}"]}}`;
+    app.fetch( query, function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
     });
   },
   escape: function(string) {
     //TODO: escape on output, to prevent XSS
-    return string;
+    return encodeURIComponent(string);
   },
   handleSubmit: function(e) {
     e.preventDefault();
@@ -60,17 +64,17 @@ var app = {
     var message = {
       'username': app.username,
       'text': $('#send .message-input').val(),
-      'roomname': 'lobby'
+      'roomname': app.currentRoom()
     };
-    app.send(message, function(data) {
-      app.renderRoom();
-    });
+
+    app.send(message, app.renderRoom);
+
     $('#send .message-input').val('');    // Clear the input box
   },
-  handleRoomChange: function() {
-    app.fetch('order=-createdAt', function(data) {
+  refreshRooms: function() {
+    app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
       // Get a list of rooms
-      var dropdown = $('#room .room');
+      var dropdown = $('.room');
       var rooms = [];
       data.results.forEach(function(chat) {
         if (!rooms.includes(chat.roomname) && chat.roomname) {
@@ -83,8 +87,11 @@ var app = {
           );
         }
       });
-      console.log(rooms);
+      console.log('Data:', data);
+      console.log('Rooms', rooms);
     });
-  }
+  },
+  currentRoom: function() {
+    return $('select.room').val() || 'lobby';
+  },
 };
-
