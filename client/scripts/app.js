@@ -25,6 +25,8 @@ var app = {
       //success and error are callback functions
       'success': success,
       'error': error,
+      'beforeSend': app.loadStart,
+      'complete': app.loadEnd
     });
   },
   fetch: function( URLParameters, success, error) {
@@ -34,8 +36,16 @@ var app = {
       'data': URLParameters,
       'contentType': 'application/json',
       'success': success,
-      'error': error
+      'error': error,
+      'beforeSend': app.loadStart,
+      'complete': app.loadEnd
     });
+  },
+  loadStart: function () {
+    $('.spinner').show();
+  },
+  loadEnd: function () {
+    $('.spinner').hide();
   },
   clearMessages: function() {
     $('#chats').empty();
