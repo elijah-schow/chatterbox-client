@@ -24,7 +24,7 @@ var app = {
     if (app.friendsList.hasOwnProperty(username)) {
       delete app.friendsList[username];
       $(`.chat .username:contains(${username})`).parent().removeClass('friend');
-      $(`#friends a.friend:content(${username})`).parent().remove();
+      $(`#friends li:contains(${username})`).parent().remove();
     } else {
       app.friendsList[username] = true;
       $(`.chat .username:contains(${username})`).parent().addClass('friend');
