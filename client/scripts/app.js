@@ -5,11 +5,13 @@ var app = {
     app.username = new URLSearchParams(window.location.search).get('username');
     app.refreshRooms();
     $('.room').val('lobby');
+    app.friendsList = [];
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
     $('.room').on('change', app.renderRoom);
     $('.refresh-rooms').on('click', app.refreshRooms);
     $('.create-room').on('click', app.createRoom);
+    $('#chats').on('click', '.chat', app.friendHandler);
 
     // Refresh loop
     setInterval(app.renderRoom, 1000);
@@ -41,6 +43,9 @@ var app = {
   renderMessage: function(message) {
     var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span></div>');
 
+    if (app.friendsList.includes(message['username'])) {
+      $chat.addClass('friend');
+    }
     $chat.find('.username').text(message['username']);
     $chat.find('.message').text(message['text']);
 
@@ -91,5 +96,14 @@ var app = {
   },
   currentRoom: function() {
     return $('.room').val() || 'lobby';
+  },
+  friendHandler: function() {
+    var username = $(this).find('.username').text();
+    
+    if (!app.friendsList.includes(username)) {
+      app.friendsList.push(username);
+    }
+
+    $(`.chat .username:contains(${username})`).parent().addClass('friend');
   }
 };

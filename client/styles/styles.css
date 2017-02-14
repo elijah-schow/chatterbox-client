@@ -75,7 +75,8 @@ select.room {
  * Social
  */
 
-.friend {
+.friend,
+.friend:hover {
    color: #fff;
    background-color: #0090da;
 }
