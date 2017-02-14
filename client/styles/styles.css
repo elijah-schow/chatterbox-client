@@ -1,80 +1,98 @@
-body {
-    background: #eee;
-    text-align: center;
-    padding: 0 25px;
-    font-family: arial, sans-serif;
+/*
+ * Typography and Page Layout
+ */
+
+html {
+    background: #FAFAFA;
+    font-family: "Helvetica Neue", "Roboto", "Open Sans", sans-serif;
 }
+
+body {
+  background: #FFF;
+  color: #333;
+  font-size: 1.125em;
+  line-height: 1.5em;
+  margin: 3em auto;
+  padding: 1em;
+  width: 35em;
+}
+
+h1 {
+    color: #000;
+    font-size: 3em;
+    font-weight: lighter;
+    letter-spacing: .125em;
+    text-align: center;
+}
+
+/*
+ * Chats
+ */
+
+#chats {
+  margin: 1em -1em -1em;
+}
+
+.chat {
+  border-top: .125em solid #FAFAFA;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: .5em 1em;
+}
+
+.chat .username {
+    font-weight: bold;
+}
+
+.chat:hover {
+    border-top: .125em solid #EEE;
+    background:#FAFAFA;
+}
+
+.chat:last-of-type {
+  border-bottom: .125em solid #EEE;
+}
+
+.chat:last-of-type:hover {
+  border-bottom: .125em solid #FAFAFA;
+}
+
+/*
+ * Input Form
+ */
 
 select.room {
     width: 100%;
 }
 
-#main, #chats {
-    width: 500px;
-    margin: auto;
-    text-align: left;
-    background: white;
-    padding: 50px 60px;
-    border: solid #ddd;
-    border-width: 0 1px 1px 1px;
-}
-
-#main h1 {
-    margin-top: 0;
-    font-size: 35px;
-    margin-bottom: 5px;
-    padding: 5px;
-}
-
-#main h1 span {
-    font-style:italic;
-}
-
-#main ul {
-    padding-left: 20px;
-}
-
-#main .error {
+.error {
     border: 1px solid red;
     background: #FDEFF0;
     padding: 20px;
 }
 
-#main .success {
+/*
+ * Social
+ */
+
+.friend {
+   color: #fff;
+   background-color: #0090da;
+}
+
+
+/*
+ * Miscellaneous
+ */
+
+.success {
     margin-top: 25px;
 }
 
-#main .success code {
+.success code {
     font-size: 12px;
     color: green;
     line-height: 13px;
-}
-
-form {
-    padding: 20px;
-    padding-left: 0;
-    margin-bottom: 20px;
-}
-
-form input[type=text] {
-    margin-right: 10px;
-    width: 70%;
-    font-size: 12px;
-    padding: 5px;
-}
-
-.chat {
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: #eee;
-}
-
-.chat .username {
-    font-weight: 800;
-}
-
-.chat:hover {
-    background-color: #ddd;
 }
 
 .spinner {
@@ -85,9 +103,4 @@ form input[type=text] {
 
 .spinner img {
     padding: 10px;
-}
-
-.friend {
-    color: #fff;
-    background-color: #0090da;
 }
