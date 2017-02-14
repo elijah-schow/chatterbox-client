@@ -142,6 +142,11 @@ a:hover {
   background:#3498DB;
 }
 
+.chat:after {
+  content:' ';
+  clear: both;
+}
+
 .chat .username {
     font-weight: bold;
 }
@@ -183,6 +188,7 @@ a:hover {
   color: #FFF;
   background: #3498DB;
   padding-left: .5em;
+  margin-left: -0.5em;
   text-decoration: none;
 }
 
