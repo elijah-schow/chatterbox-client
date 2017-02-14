@@ -48,9 +48,14 @@ h1 {
     color: #000;
     font-size: 3em;
     font-weight: lighter;
-    margin: 1em auto 1.25em;
+    margin: 1.25em auto;
     letter-spacing: .125em;
     text-align: center;
+}
+
+h3 {
+ font-size: 1em;
+ position: relative;
 }
 
 a {
@@ -72,8 +77,8 @@ a:hover {
 
 .container {
   background: #FFF;
-  margin: 0 auto;
-  max-width: 40em;
+  margin: 2em auto;
+  max-width: 45em;
   width: 90%;
 }
 
@@ -153,11 +158,6 @@ a:hover {
 /*
  * Sidebar
  */
-
-h3 {
- font-size: 1em;
- position: relative;
-}
 
 .menu {
   font-size: .75em;
