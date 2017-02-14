@@ -1,5 +1,36 @@
 /*
- * Typography and Page Layout
+ * Reset
+ */
+html,
+body,
+p,
+h1, h2, h3, h4, h5, h6
+ol, ul,
+pre,
+address,
+blockquote,
+dl,
+div,
+fieldset,
+form,
+hr,
+noscript,
+table {
+  padding: 0;
+  margin: 0;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+ * Typography
  */
 
 html {
@@ -8,13 +39,9 @@ html {
 }
 
 body {
-  background: #FFF;
   color: #333;
   font-size: 1.125em;
   line-height: 1.5em;
-  margin: 1.5em auto;
-  padding: 1em;
-  width: 35em;
 }
 
 h1 {
@@ -25,19 +52,72 @@ h1 {
     text-align: center;
 }
 
+a {
+  color: #3498DB;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Layout
+ */
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.container {
+  background: #FFF;
+  margin: 0 auto;
+  max-width: 40em;
+  width: 90%;
+}
+
+.column {
+  float: left;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+.column.full {
+  width: 100%;
+}
+
+.column.main {
+  width: 80%;
+}
+
+.column.side {
+  width: 20%;
+}
+
+.row:before,
+.row:after {
+  content: " ";
+  display: table;
+}
+
+.row:after {
+  clear: both;
+}
+
+.row {
+  *zoom: 1;
+}
+
 /*
  * Chats
  */
-
-#chats {
-  margin: 1em -1em -1em;
-}
 
 .chat {
   border-top: .125em solid #FAFAFA;
   box-sizing: border-box;
   cursor: pointer;
   padding: .75em 1em;
+  margin: 0 -1em;
   word-wrap: break-word;
 }
 
@@ -46,8 +126,8 @@ h1 {
 }
 
 .chat:hover {
-    border-top: .125em solid #EEE;
-    background:#FAFAFA;
+  color: #FFF;
+  background:#3498DB;
 }
 
 .chat:last-of-type {
@@ -56,6 +136,51 @@ h1 {
 
 .chat:last-of-type:hover {
   border-bottom: .125em solid #FAFAFA;
+}
+
+.friend {
+   color: #fff;
+   background-color: #3498DB;
+}
+
+/*
+ * Sidebar
+ */
+
+#rooms,
+#friends {
+  font-size: .75em;
+  margin-bottom: 1em;
+}
+
+#rooms h3,
+#friends h3 {
+  font-size: 1em;
+  position: relative;
+}
+
+#rooms li a,
+#friends li a {
+  display: block;
+  position: relative;
+}
+
+#rooms li a {
+  padding:0 .5em;
+}
+
+#rooms li a:hover,
+#rooms li a.selected {
+  color: #333;
+  background: #EEE;
+  border-left: .250em solid #3498DB;
+  left: -0.250em;
+  text-decoration: none;
+}
+
+#rooms li a.selected {
+  background: #EEE;
+  color: #333;
 }
 
 /*
@@ -75,12 +200,12 @@ input[type="text"] {
   outline: none;
 }
 input[type="text"]:focus {
-  border: .125em solid #3498dB;
+  border: .125em solid #3498DB;
 }
 
 .submit {
   background: #3498DB;
-  border: .125em solid #3498dB;
+  border: .125em solid #3498DB;
   color: #FFF;
   cursor: pointer;
   padding: 1em 1.5em;
@@ -105,16 +230,6 @@ select.room {
     background: #FDEFF0;
     padding: 20px;
 }
-
-/*
- * Social
- */
-
-.friend {
-   color: #fff;
-   background-color: #0090da;
-}
-
 
 /*
  * Miscellaneous

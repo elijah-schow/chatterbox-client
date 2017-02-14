@@ -1,45 +1,70 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>chatterbox</title>
-    <link rel="stylesheet" href="styles/styles.css">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>chatterbox</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="column full">
+        <h1>chatterbox</h1>
+        <label>Room:</label>
+        <select class="room"></select>
+        <button class="create-room">create room</button>
+        <button class="refresh-rooms">refresh rooms</button>
+        <form id="send">
+          <input type="text" class="message-input" placeholder="Your Message Here">
+          <input type="submit" value="send" class="submit">
+        </form>
+      </div> <!-- .column.full -->
+    </div> <!-- .row -->
+    <div class="row">
+      <div class="column main">
+        <div id="chats">&nbsp;</div>
+      </div> <!-- .column.main -->
+      <div class="column side">
+        <ul id="rooms" class="menu">
+          <h3>Rooms</h2>
+          <li><a href="#" class="selected">Lobby</a></li>
+          <li><a href="#">Test</a></li>
+          <li><a href="#">DND</a></li>
+        </ul>
+        <ul id="friends">
+          <h3>Friends</h2>
+          <li><a href="#">John</a></li>
+          <li><a href="#">Buffy</a></li>
+          <li><a href="#">Tim</a></li>
+          <li><a href="#">Larry</a></li>
+          <li><a href="#">George</a></li>
+        </ul>
+      </div> <!-- .column.side -->
+    </div> <!-- .row -->
+  </div> <!-- .container -->
 
-  </head>
-  <body>
-    <h1>chatterbox</h1>
-    <label>Room:</label>
-    <select class="room"></select>
-    <button class="create-room">create room</button>
-    <button class="refresh-rooms">refresh rooms</button>
-    <form id="send">
-      <input type="text" class="message-input" placeholder="Your Message Here">
-      <input type="submit" value="send" class="submit">
-    </form>
-    <div id="chats"></div>
+  <!-- dependencies -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
 
+  <!-- your scripts -->
+  <script src="env/config.js"></script>
+  <script src="scripts/app.js"></script>
 
-    <!-- dependencies -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
+  <script>
+  // YOU DO NOT NEED TO EDIT THIS CODE
+  if (!/(&|\?)username=/.test(window.location.search)) {
+    var newSearch = window.location.search;
+    if (newSearch !== '' & newSearch !== '?') {
+      newSearch += '&';
+    }
 
-    <!-- your scripts -->
-    <script src="env/config.js"></script>
-    <script src="scripts/app.js"></script>
+    newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+    window.location.search = newSearch;
+  }
 
-    <script>
-      // YOU DO NOT NEED TO EDIT THIS CODE
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var newSearch = window.location.search;
-        if (newSearch !== '' & newSearch !== '?') {
-          newSearch += '&';
-        }
-
-        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = newSearch;
-      }
-
-      $(document).ready(app.init);
-    </script>
-  </body>
+  $(document).ready(app.init);
+  </script>
+</body>
 </html>
