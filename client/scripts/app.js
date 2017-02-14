@@ -125,7 +125,10 @@ var app = {
     $('#rooms a.room').remove();
   },
 
-  refreshRooms: function() {
+  refreshRooms: function(e) {
+
+    if(e){e.preventDefault();}
+
     // TODO: Refactor to use objects, which can be accessed in constant time
     var rooms = [];
     app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
@@ -142,7 +145,8 @@ var app = {
   createRoom: function() {
     var room = prompt('Room Name');
     app.addToRoomList(room);
-    $('.room').val(room);
+    app.room = room;
+    app.renderRoom();
   },
 
   addToRoomList: function(name) {
@@ -164,7 +168,7 @@ var app = {
     var day = date.getDate();
     var month = monthNames[date.getMonth()];
     var year = date.getFullYear();
-    
+
     return `${month} ${day}, ${year}`;
   }
 };

@@ -54,8 +54,10 @@ h1 {
 }
 
 h3 {
- font-size: 1em;
- position: relative;
+  border-top: .125em solid #FAFAFA;
+  font-size: 1em;
+  margin: 0 -1em;
+  padding: .5em 1em 0;
 }
 
 a {
@@ -70,6 +72,14 @@ a:hover {
 /*
  * Layout
  */
+
+ .main {
+   border-right: .0625em solid #FAFAFA;
+ }
+
+.side {
+  border-left: .0625em solid #FAFAFA;
+}
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -112,14 +122,6 @@ a:hover {
 
 .row {
   *zoom: 1;
-}
-
-.main {
-  border-right: .1em solid #FAFAFA;
-}
-
-.side {
-  border-left: .1em solid #FAFAFA;
 }
 
 /*
@@ -182,6 +184,15 @@ a:hover {
   background: #3498DB;
   padding-left: .5em;
   text-decoration: none;
+}
+
+.menu hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: .125em solid #FAFAFA;
+  margin: .5em 0;
+  padding: 0;
 }
 
 /*
