@@ -1,9 +1,11 @@
 var app = {
-  server : 'http://parse.atx.hackreactor.com/chatterbox/classes/messages',
-  username : new URLSearchParams(window.location.search).get('username'),
-  room : 'lobby',
-  roomList : {},
+  server: 'http://parse.atx.hackreactor.com/chatterbox/classes/messages',
+  username: new URLSearchParams(window.location.search).get('username'),
+  room: 'lobby',
+  roomList: {},
   friendsList: {},
+  maxUsernameLength: 120,
+  maxMessageLength: 1000,
 
   init: function() {
     app.goToRoom(app.room);
@@ -58,7 +60,7 @@ var app = {
     app.goToRoom( $(this).text() );
   },
 
-  handleRoomCreation: function(e){
+  handleRoomCreation: function(e) {
     e.preventDefault();
     var room = prompt('Room Name');
     app.addToRoomList(room);
@@ -102,15 +104,14 @@ var app = {
     return `${month} ${day}, ${year}`;
   },
 
-
   renderMessage: function(message) {
     var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span><span class="date"></span></div>');
 
     if (app.friendsList.hasOwnProperty(message['username'])) {
       $chat.addClass('friend');
     }
-    $chat.find('.username').text(message['username']);
-    $chat.find('.message').text(message['text']);
+    $chat.find('.username').text(app.truncate(message['username'], app.maxUsernameLength));
+    $chat.find('.message').text(app.truncate(message['text'], app.maxMessageLength));
     $chat.find('.date').text( app.formatDate(message['createdAt']) );
 
     $('#chats').append($chat);
@@ -163,4 +164,9 @@ var app = {
   addToRoomList: function(room) {
     app.roomList[room] = true;
   },
+
+  truncate: function(string, maxLength) {
+    var end = Math.min(string.length, maxLength);
+    return string.substring(0, end);
+  }
 };
