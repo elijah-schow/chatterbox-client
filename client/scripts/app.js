@@ -59,7 +59,7 @@ var app = {
     app.goToRoom( $(this).text() );
   },
 
-  handleRoomCreation: function(){
+  handleRoomCreation: function(e){
     e.preventDefault();
     var room = prompt('Room Name');
     app.addToRoomList(room);
