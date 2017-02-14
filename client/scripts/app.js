@@ -67,10 +67,12 @@ var app = {
       'text': $('#send .message-input').val(),
       'roomname': app.currentRoom()
     };
-
-    app.send(message, app.renderRoom);
-
-    $('#send .message-input').val('');    // Clear the input box
+    if (message.text) {
+      app.send(message, app.renderRoom);
+      
+      //clear the input box  
+      $('#send .message-input').val('');
+    }
   },
   refreshRooms: function() {
     app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
