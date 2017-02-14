@@ -9,6 +9,7 @@ var app = {
     $('#send .submit').on('click', app.handleSubmit);
     $('.room').on('change', app.renderRoom);
     $('.refresh-rooms').on('click', app.refreshRooms);
+    $('.create-room').on('click', app.createRoom);
 
     // Refresh loop
     app.renderRoom();
@@ -69,21 +70,28 @@ var app = {
   },
   refreshRooms: function() {
     app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
-      // Get a list of rooms
-      var dropdown = $('.room');
       var rooms = [];
-      dropdown.empty();
+      $('.room').empty();
       data.results.forEach(function(chat) {
         if (!rooms.includes(chat.roomname) && chat.roomname) {
           rooms.push(chat.roomname);
-          dropdown.append($('<option></option>')
-            .text(chat.roomname)
-            .attr('value', chat.roomname));
+          app.addToRoomList(chat.roomname);
         }
       });
     });
   },
-  currentRoom: function() {
-    return $('select.room').val() || 'lobby';
+  createRoom: function() {
+    var room = prompt('Room Name');
+    app.addToRoomList(room);
+    $('.room').val(room);
+    app.renderRoom(room);
   },
+  addToRoomList: function(name) {
+    $('.room').append($('<option></option>')
+        .text(name)
+        .attr('value', name));
+  },
+  currentRoom: function() {
+    return $('.room').val() || 'lobby';
+  }
 };
