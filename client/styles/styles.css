@@ -12,7 +12,7 @@ body {
   color: #333;
   font-size: 1.125em;
   line-height: 1.5em;
-  margin: 3em auto;
+  margin: 1.5em auto;
   padding: 1em;
   width: 35em;
 }
@@ -37,7 +37,8 @@ h1 {
   border-top: .125em solid #FAFAFA;
   box-sizing: border-box;
   cursor: pointer;
-  padding: .5em 1em;
+  padding: .75em 1em;
+  word-wrap: break-word;
 }
 
 .chat .username {
@@ -60,6 +61,40 @@ h1 {
 /*
  * Input Form
  */
+
+input[type="text"] {
+  font-size:.75em;
+  width: 70%;
+  padding: .6666em;
+  border: .125em solid #EEE;
+}
+
+*:hover,
+*:active,
+*:focus {
+  outline: none;
+}
+input[type="text"]:focus {
+  border: .125em solid #3498dB;
+}
+
+.submit {
+  background: #3498DB;
+  border: .125em solid #3498dB;
+  color: #FFF;
+  cursor: pointer;
+  padding: 1em 1.5em;
+  text-transform: uppercase;
+}
+
+.submit:hover {
+  background: #2980b9;
+  color: #FFF;
+}
+
+.submit:active {
+  background: #34495e;
+}
 
 select.room {
     width: 100%;
