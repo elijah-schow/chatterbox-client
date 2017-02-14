@@ -6,6 +6,7 @@ var app = {
 
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
+    $('#room .room').on('change', app.handleRoomChange);
 
     // Refresh loop
     app.renderRoom();
@@ -22,11 +23,11 @@ var app = {
       'error': error,
     });
   },
-  fetch: function(success, error) {
+  fetch: function( URLParameters, success, error) {
     $.ajax({
       'url': app.server,
       'type': 'GET',
-      'data': 'order=-createdAt',
+      'data': URLParameters,
       'contentType': 'application/json',
       'success': success,
       'error': error
@@ -44,10 +45,9 @@ var app = {
     $('#chats').append($chat);
   },
   renderRoom: function() {
-    app.fetch(function(data) {
+    app.fetch( 'order=-createdAt', function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
-      console.log(data);
     });
   },
   escape: function(string) {
@@ -63,10 +63,28 @@ var app = {
       'roomname': 'lobby'
     };
     app.send(message, function(data) {
-      console.log(data);
       app.renderRoom();
     });
     $('#send .message-input').val('');    // Clear the input box
+  },
+  handleRoomChange: function() {
+    app.fetch('order=-createdAt', function(data) {
+      // Get a list of rooms
+      var dropdown = $('#room .room');
+      var rooms = [];
+      data.results.forEach(function(chat) {
+        if (!rooms.includes(chat.roomname) && chat.roomname) {
+          rooms.push(chat.roomname);
+          // Populate room dropdown
+          dropdown.append(
+            $('<option></option>')
+              .text(chat.roomname)
+              .val(app.escape(chat.roomname))
+          );
+        }
+      });
+      console.log(rooms);
+    });
   }
 };
 
