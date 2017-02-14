@@ -54,10 +54,6 @@ var app = {
       data.results.forEach(app.renderMessage);
     });
   },
-  escape: function(string) {
-    //TODO: escape on output, to prevent XSS
-    return encodeURIComponent(string);
-  },
   handleSubmit: function(e) {
     e.preventDefault();
 
@@ -76,19 +72,15 @@ var app = {
       // Get a list of rooms
       var dropdown = $('.room');
       var rooms = [];
+      dropdown.empty();
       data.results.forEach(function(chat) {
         if (!rooms.includes(chat.roomname) && chat.roomname) {
           rooms.push(chat.roomname);
-          // Populate room dropdown
-          dropdown.append(
-            $('<option></option>')
-              .text(chat.roomname)
-              .val(app.escape(chat.roomname))
-          );
+          dropdown.append($('<option></option>')
+            .text(chat.roomname)
+            .attr('value', chat.roomname));
         }
       });
-      console.log('Data:', data);
-      console.log('Rooms', rooms);
     });
   },
   currentRoom: function() {
