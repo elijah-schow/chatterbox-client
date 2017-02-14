@@ -1,21 +1,23 @@
 var app = {
+  server : 'http://parse.atx.hackreactor.com/chatterbox/classes/messages',
+  username : new URLSearchParams(window.location.search).get('username'),
+  room : 'lobby',
+  friendsList: {},
+
   init: function() {
-    // Properties
-    app.server = 'http://parse.atx.hackreactor.com/chatterbox/classes/messages';
-    app.username = new URLSearchParams(window.location.search).get('username');
     app.refreshRooms();
-    $('.room').val('lobby');
-    app.friendsList = [];
+    app.renderRoom();
+    setInterval(app.renderRoom, 1000);
+
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
-    $('.room').on('change', app.renderRoom);
+    $('#rooms').on('click', 'a.room', app.handleRoomChange);
     $('.refresh-rooms').on('click', app.refreshRooms);
     $('.create-room').on('click', app.createRoom);
     $('#chats').on('click', '.chat', app.friendHandler);
-
-    // Refresh loop
-    setInterval(app.renderRoom, 1000);
+    $('#friends').on('click', 'a.friend', app.friendHandler);
   },
+
   send: function(data, success, error) {
     $.ajax({
       'url': app.server,
@@ -29,6 +31,7 @@ var app = {
       'complete': app.loadEnd
     });
   },
+
   fetch: function( URLParameters, success, error) {
     $.ajax({
       'url': app.server,
@@ -41,19 +44,23 @@ var app = {
       'complete': app.loadEnd
     });
   },
+
   loadStart: function () {
     $('.spinner').show();
   },
+
   loadEnd: function () {
     $('.spinner').hide();
   },
+
   clearMessages: function() {
     $('#chats').empty();
   },
+
   renderMessage: function(message) {
     var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span></div>');
 
-    if (app.friendsList.includes(message['username'])) {
+    if (app.friendsList.hasOwnProperty(message['username'])) {
       $chat.addClass('friend');
     }
     $chat.find('.username').text(message['username']);
@@ -61,14 +68,34 @@ var app = {
 
     $('#chats').append($chat);
   },
+
   renderRoom: function(room) {
-    room = room || app.currentRoom();
+    room = room || app.room;
     var query = `order=-createdAt&where={"roomname":{"$in":["${room}"]}}`;
     app.fetch( query, function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
     });
   },
+
+  friendHandler: function(e) {
+    e.preventDefault();
+    var username = $(this).find('.username').text();
+
+    // Toggle friends
+    if (app.friendsList.hasOwnProperty(username)) {
+      delete app.friendsList[username];
+      $(`.chat .username:contains(${username})`).parent().removeClass('friend');
+      $(`#friends a.friend:content(${username})`).parent().remove();
+    } else {
+      app.friendsList[username] = true;
+      $(`.chat .username:contains(${username})`).parent().addClass('friend');
+      $('#friends').append(
+        $('<li></li>').text(username)
+      );
+    }
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
@@ -79,15 +106,29 @@ var app = {
     };
     if (message.text) {
       app.send(message, app.renderRoom);
-      
-      //clear the input box  
+
+      //clear the input box
       $('#send .message-input').val('');
     }
   },
+
+  handleRoomChange: function(e) {
+    e.preventDefault();
+    app.room = $(this).text();
+    $('#rooms a.room').removeClass('selected');
+    $(this).addClass('selected');
+    app.renderRoom();
+  },
+
+  clearRooms: function(){
+    $('#rooms a.room').remove();
+  },
+
   refreshRooms: function() {
+    // TODO: Refactor to use objects, which can be accessed in constant time
+    var rooms = [];
     app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
-      var rooms = [];
-      $('.room').empty();
+      app.clearRooms();
       data.results.forEach(function(chat) {
         if (!rooms.includes(chat.roomname) && chat.roomname) {
           rooms.push(chat.roomname);
@@ -96,29 +137,23 @@ var app = {
       });
     });
   },
+
   createRoom: function() {
     var room = prompt('Room Name');
     app.addToRoomList(room);
     $('.room').val(room);
   },
+
   addToRoomList: function(name) {
-    $('.room').append($('<option></option>')
-        .text(name)
-        .attr('value', name));
+    $('#rooms').prepend(
+      $('<li></li>').append(
+        $('<a class="room" href="#"></a>')
+          .text(name)
+      )
+    );
   },
+
   currentRoom: function() {
-    return $('.room').val() || 'lobby';
-  },
-  friendHandler: function() {
-    var username = $(this).find('.username').text();
-    
-    $('.chat').removeClass('friend');
-    
-    if (app.friendsList.includes(username)) {
-      app.friendsList.splice(app.friendsList.indexOf(username), 1);
-      $(`.chat .username:contains(${username})`).parent().addClass('friend');
-    } else {
-      app.friendsList.push(username);
-    }
+    return $('#rooms a.room.selected').text() || 'lobby';
   }
 };

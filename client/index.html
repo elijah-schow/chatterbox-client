@@ -11,34 +11,23 @@
     <div class="row">
       <div class="column full">
         <h1>chatterbox</h1>
-        <label>Room:</label>
-        <select class="room"></select>
-        <button class="create-room">create room</button>
-        <button class="refresh-rooms">refresh rooms</button>
-        <form id="send">
-          <input type="text" class="message-input" placeholder="Your Message Here">
-          <input type="submit" value="send" class="submit">
-        </form>
       </div> <!-- .column.full -->
     </div> <!-- .row -->
     <div class="row">
       <div class="column main">
+        <form id="send">
+          <input type="text" class="message-input" placeholder="Enter message">
+          <input type="submit" value="send" class="submit">
+        </form>
         <div id="chats">&nbsp;</div>
       </div> <!-- .column.main -->
       <div class="column side">
+        <h3>Friends</h2>
+        <ul id="friends" class="menu"></ul>
+        <h3>Rooms</h2>
         <ul id="rooms" class="menu">
-          <h3>Rooms</h2>
-          <li><a href="#" class="selected">Lobby</a></li>
-          <li><a href="#">Test</a></li>
-          <li><a href="#">DND</a></li>
-        </ul>
-        <ul id="friends">
-          <h3>Friends</h2>
-          <li><a href="#">John</a></li>
-          <li><a href="#">Buffy</a></li>
-          <li><a href="#">Tim</a></li>
-          <li><a href="#">Larry</a></li>
-          <li><a href="#">George</a></li>
+          <li><a href="#" class="create-room">Create</a></li>
+          <li><a href="#" class="refresh-rooms">Refresh</a></li>
         </ul>
       </div> <!-- .column.side -->
     </div> <!-- .row -->

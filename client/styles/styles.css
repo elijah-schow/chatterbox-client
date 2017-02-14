@@ -48,6 +48,7 @@ h1 {
     color: #000;
     font-size: 3em;
     font-weight: lighter;
+    margin:1em auto 1.25em;
     letter-spacing: .125em;
     text-align: center;
 }
@@ -87,11 +88,11 @@ a:hover {
 }
 
 .column.main {
-  width: 80%;
+  width: 70%;
 }
 
 .column.side {
-  width: 20%;
+  width: 30%;
 }
 
 .row:before,
@@ -106,6 +107,14 @@ a:hover {
 
 .row {
   *zoom: 1;
+}
+
+.main {
+  border-right: .1em solid #FAFAFA;
+}
+
+.side {
+  border-left: .1em solid #FAFAFA;
 }
 
 /*
@@ -130,15 +139,7 @@ a:hover {
   background:#3498DB;
 }
 
-.chat:last-of-type {
-  border-bottom: .125em solid #EEE;
-}
-
-.chat:last-of-type:hover {
-  border-bottom: .125em solid #FAFAFA;
-}
-
-.friend {
+#chats .friend {
    color: #fff;
    background-color: #3498DB;
 }
@@ -147,49 +148,47 @@ a:hover {
  * Sidebar
  */
 
-#rooms,
-#friends {
+h3 {
+ font-size: 1em;
+ position: relative;
+}
+
+.menu {
   font-size: .75em;
   margin-bottom: 1em;
+  word-wrap: break-word;
 }
 
-#rooms h3,
-#friends h3 {
-  font-size: 1em;
-  position: relative;
-}
-
-#rooms li a,
-#friends li a {
+.menu li a {
+  cursor: pointer;
   display: block;
-  position: relative;
-}
-
-#rooms li a {
-  padding:0 .5em;
-}
-
-#rooms li a:hover,
-#rooms li a.selected {
-  color: #333;
-  background: #EEE;
-  border-left: .250em solid #3498DB;
-  left: -0.250em;
+  padding: .5em 0;
+  line-height: 1em;
   text-decoration: none;
 }
 
-#rooms li a.selected {
-  background: #EEE;
-  color: #333;
+.menu li a:hover {
+  text-decoration: underline;
+}
+
+.menu li a.selected {
+  color: #FFF;
+  background: #3498DB;
+  padding-left: .5em;
+  text-decoration: none;
 }
 
 /*
  * Input Form
  */
 
+ form {
+   margin: 0 0 1.5em;
+ }
+
 input[type="text"] {
   font-size:.75em;
-  width: 70%;
+  width: 80%;
   padding: .6666em;
   border: .125em solid #EEE;
 }
@@ -210,6 +209,8 @@ input[type="text"]:focus {
   cursor: pointer;
   padding: 1em 1.5em;
   text-transform: uppercase;
+  width: 20%;
+  float: right;
 }
 
 .submit:hover {
