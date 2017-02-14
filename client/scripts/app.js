@@ -5,11 +5,13 @@ var app = {
     app.username = new URLSearchParams(window.location.search).get('username');
     app.refreshRooms();
     $('.room').val('lobby');
+    app.friendsList = [];
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
     $('.room').on('change', app.renderRoom);
     $('.refresh-rooms').on('click', app.refreshRooms);
     $('.create-room').on('click', app.createRoom);
+    $('#chats').on('click', '.chat', app.friendHandler);
 
     // Refresh loop
     setInterval(app.renderRoom, 1000);
@@ -23,6 +25,8 @@ var app = {
       //success and error are callback functions
       'success': success,
       'error': error,
+      'beforeSend': app.loadStart,
+      'complete': app.loadEnd
     });
   },
   fetch: function( URLParameters, success, error) {
@@ -32,8 +36,16 @@ var app = {
       'data': URLParameters,
       'contentType': 'application/json',
       'success': success,
-      'error': error
+      'error': error,
+      'beforeSend': app.loadStart,
+      'complete': app.loadEnd
     });
+  },
+  loadStart: function () {
+    $('.spinner').show();
+  },
+  loadEnd: function () {
+    $('.spinner').hide();
   },
   clearMessages: function() {
     $('#chats').empty();
@@ -41,6 +53,9 @@ var app = {
   renderMessage: function(message) {
     var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span></div>');
 
+    if (app.friendsList.includes(message['username'])) {
+      $chat.addClass('friend');
+    }
     $chat.find('.username').text(message['username']);
     $chat.find('.message').text(message['text']);
 
@@ -62,10 +77,12 @@ var app = {
       'text': $('#send .message-input').val(),
       'roomname': app.currentRoom()
     };
-
-    app.send(message, app.renderRoom);
-
-    $('#send .message-input').val('');    // Clear the input box
+    if (message.text) {
+      app.send(message, app.renderRoom);
+      
+      //clear the input box  
+      $('#send .message-input').val('');
+    }
   },
   refreshRooms: function() {
     app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
@@ -91,5 +108,17 @@ var app = {
   },
   currentRoom: function() {
     return $('.room').val() || 'lobby';
+  },
+  friendHandler: function() {
+    var username = $(this).find('.username').text();
+    
+    $('.chat').removeClass('friend');
+    
+    if (app.friendsList.includes(username)) {
+      app.friendsList.splice(app.friendsList.indexOf(username), 1);
+      $(`.chat .username:contains(${username})`).parent().addClass('friend');
+    } else {
+      app.friendsList.push(username);
+    }
   }
 };

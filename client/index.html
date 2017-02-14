@@ -44,14 +44,14 @@
     </div> <!-- .row -->
   </div> <!-- .container -->
 
+  <!-- Javascript -->
+
   <!-- dependencies -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/underscore/underscore.js"></script>
-
-  <!-- your scripts -->
+  <!-- application -->
   <script src="env/config.js"></script>
   <script src="scripts/app.js"></script>
-
   <script>
   // YOU DO NOT NEED TO EDIT THIS CODE
   if (!/(&|\?)username=/.test(window.location.search)) {
@@ -63,7 +63,6 @@
     newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
     window.location.search = newSearch;
   }
-
   $(document).ready(app.init);
   </script>
 </body>
