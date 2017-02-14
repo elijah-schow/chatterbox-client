@@ -4,7 +4,7 @@ var app = {
     app.server = 'http://parse.atx.hackreactor.com/chatterbox/classes/messages';
     app.username = new URLSearchParams(window.location.search).get('username');
     app.refreshRooms();
-
+    $('.room').val('lobby');
     // Event Handlers
     $('#send .submit').on('click', app.handleSubmit);
     $('.room').on('change', app.renderRoom);
@@ -12,7 +12,6 @@ var app = {
     $('.create-room').on('click', app.createRoom);
 
     // Refresh loop
-    app.renderRoom();
     setInterval(app.renderRoom, 1000);
   },
   send: function(data, success, error) {
@@ -84,7 +83,6 @@ var app = {
     var room = prompt('Room Name');
     app.addToRoomList(room);
     $('.room').val(room);
-    app.renderRoom(room);
   },
   addToRoomList: function(name) {
     $('.room').append($('<option></option>')
