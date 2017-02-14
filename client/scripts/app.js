@@ -100,10 +100,13 @@ var app = {
   friendHandler: function() {
     var username = $(this).find('.username').text();
     
-    if (!app.friendsList.includes(username)) {
+    $('.chat').removeClass('friend');
+    
+    if (app.friendsList.includes(username)) {
+      app.friendsList.splice(app.friendsList.indexOf(username), 1);
+      $(`.chat .username:contains(${username})`).parent().addClass('friend');
+    } else {
       app.friendsList.push(username);
     }
-
-    $(`.chat .username:contains(${username})`).parent().addClass('friend');
   }
 };
