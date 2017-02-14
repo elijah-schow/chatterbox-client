@@ -48,7 +48,7 @@ h1 {
     color: #000;
     font-size: 3em;
     font-weight: lighter;
-    margin:1em auto 1.25em;
+    margin: 1em auto 1.25em;
     letter-spacing: .125em;
     text-align: center;
 }
@@ -130,13 +130,19 @@ a:hover {
   word-wrap: break-word;
 }
 
+.chat:hover {
+  color: #FFF;
+  background:#3498DB;
+}
+
 .chat .username {
     font-weight: bold;
 }
 
-.chat:hover {
-  color: #FFF;
-  background:#3498DB;
+.chat .date {
+  color: #CCC;
+  float: right;
+  font-size: .65em;
 }
 
 #chats .friend {
@@ -204,7 +210,7 @@ input[type="text"]:focus {
 
 .submit {
   background: #3498DB;
-  border: .125em solid #3498DB;
+  border: none;
   color: #FFF;
   cursor: pointer;
   padding: 1em 1.5em;

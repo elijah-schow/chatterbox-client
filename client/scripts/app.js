@@ -58,13 +58,14 @@ var app = {
   },
 
   renderMessage: function(message) {
-    var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span></div>');
+    var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span><span class="date"></span></div>');
 
     if (app.friendsList.hasOwnProperty(message['username'])) {
       $chat.addClass('friend');
     }
     $chat.find('.username').text(message['username']);
     $chat.find('.message').text(message['text']);
+    $chat.find('.date').text( app.formatDate(message['createdAt']) );
 
     $('#chats').append($chat);
   },
@@ -155,5 +156,15 @@ var app = {
 
   currentRoom: function() {
     return $('#rooms a.room.selected').text() || 'lobby';
+  },
+
+  formatDate: function(string) {
+    var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Nov', 'Dec'];
+    var date = new Date(string);
+    var day = date.getDate();
+    var month = monthNames[date.getMonth()];
+    var year = date.getFullYear();
+    
+    return `${month} ${day}, ${year}`;
   }
 };
