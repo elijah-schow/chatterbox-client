@@ -48,7 +48,7 @@ var app = {
   },
   renderRoom: function(room) {
     room = room || app.currentRoom();
-    var query = `where={"roomname":{"$in":["${room}"]}}`;
+    var query = `order=-createdAt&where={"roomname":{"$in":["${room}"]}}`;
     app.fetch( query, function(data) {
       app.clearMessages();
       data.results.forEach(app.renderMessage);
