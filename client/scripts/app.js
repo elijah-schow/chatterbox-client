@@ -51,7 +51,6 @@ var app = {
   handleRoomsRefresh: function(e) {
     e.preventDefault();
     app.refreshRoomList();
-    app.renderRoomList();
   },
 
   handleRoomChange: function(e) {
