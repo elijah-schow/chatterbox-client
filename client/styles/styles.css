@@ -5,6 +5,10 @@ body {
     font-family: arial, sans-serif;
 }
 
+select.room {
+    width: 100%;
+}
+
 #main, #chats {
     width: 500px;
     margin: auto;
