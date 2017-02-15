@@ -4,10 +4,12 @@ var app = {
   room: 'lobby',
   roomList: {},
   friendsList: {},
-  maxUsernameLength: 120,
+  maxUsernameLength: 140,
   maxMessageLength: 1000,
+  maxRoomnameLength: 140,
 
   init: function() {
+    app.renderRoom();
     app.goToRoom(app.room);
     setInterval(app.renderRoom, 1000);
     // Event Handlers
@@ -138,9 +140,12 @@ var app = {
   },
 
   refreshRoomList: function(){
-    app.fetch('order=-createdAt&keys=roomname', function(data) {
+    app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
       data.results.forEach(function(chat) {
-        app.roomList[chat.roomname] = true;
+        if(chat.roomname){
+          var roomname = app.truncate(chat.roomname, app.maxRoomnameLength);
+          app.roomList[roomname] = true;
+        }
       });
       app.renderRoomList();
     });
