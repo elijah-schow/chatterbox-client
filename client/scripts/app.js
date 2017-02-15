@@ -138,7 +138,7 @@ var app = {
   },
 
   refreshRoomList: function(){
-    app.fetch('order=-createdAt&limit=1000&keys=roomname', function(data) {
+    app.fetch('order=-createdAt&keys=roomname', function(data) {
       data.results.forEach(function(chat) {
         app.roomList[chat.roomname] = true;
       });
