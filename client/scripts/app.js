@@ -28,13 +28,9 @@ var app = {
     if (app.friendsList.hasOwnProperty(username)) {
       delete app.friendsList[username];
       $(`.chat .username:contains(${username})`).parent().removeClass('friend');
-      $(`#friends li:contains(${username})`).parent().remove();
     } else {
       app.friendsList[username] = true;
       $(`.chat .username:contains(${username})`).parent().addClass('friend');
-      $('#friends').append(
-        $('<li></li>').text(username)
-      );
     }
   },
 
@@ -112,7 +108,7 @@ var app = {
     {
       var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span><span class="date"></span></div>');
 
-      if (app.friendsList.hasOwnProperty(message['username'])) {
+      if (app.friendsList.hasOwnProperty(app.truncate(message['username'], app.maxUsernameLength))) {
         $chat.addClass('friend');
       }
       $chat.find('.username').text(app.truncate(message['username'], app.maxUsernameLength));
