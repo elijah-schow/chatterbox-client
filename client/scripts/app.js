@@ -107,16 +107,20 @@ var app = {
   },
 
   renderMessage: function(message) {
-    var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span><span class="date"></span></div>');
+    // Don't render empty messages
+    if(message['username'] && message['text'])
+    {
+      var $chat = $('<div class="chat"><span class="username"></span>: <span class="message"></span><span class="date"></span></div>');
 
-    if (app.friendsList.hasOwnProperty(message['username'])) {
-      $chat.addClass('friend');
+      if (app.friendsList.hasOwnProperty(message['username'])) {
+        $chat.addClass('friend');
+      }
+      $chat.find('.username').text(app.truncate(message['username'], app.maxUsernameLength));
+      $chat.find('.message').text(app.truncate(message['text'], app.maxMessageLength));
+      $chat.find('.date').text( app.formatDate(message['createdAt']) );
+
+      $('#chats').append($chat);
     }
-    $chat.find('.username').text(app.truncate(message['username'], app.maxUsernameLength));
-    $chat.find('.message').text(app.truncate(message['text'], app.maxMessageLength));
-    $chat.find('.date').text( app.formatDate(message['createdAt']) );
-
-    $('#chats').append($chat);
   },
 
   clearMessages: function() {
